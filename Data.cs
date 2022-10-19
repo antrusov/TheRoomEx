@@ -18,7 +18,6 @@ class Location
 class Option
 {
     public string Title;
-    public string Message;
     public DelegateForVisible Visible;
     public DelegateForWork Work;
 }

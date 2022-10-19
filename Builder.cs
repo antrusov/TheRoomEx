@@ -43,13 +43,12 @@ class StoryBuilder
         return this;
     }
 
-    public StoryBuilder AddOption(int forLocationId, int toLocationId, string title, string message = "")
+    public StoryBuilder AddOption(int forLocationId, int toLocationId, string title)
     {
         var location = story.Locations.First(l => l.Id == forLocationId);
         var action = new Option()
         {
             Title = title,
-            Message = message,
             Visible = () => true,
             Work = () => story.currentId = toLocationId
         };
@@ -57,13 +56,12 @@ class StoryBuilder
         return this;
     }
 
-    public StoryBuilder AddOption(int forLocationId, int toLocationId, string title, string message, DelegateForVisible visible)
+    public StoryBuilder AddOption(int forLocationId, int toLocationId, string title, DelegateForVisible visible)
     {
         var location = story.Locations.First(l => l.Id == forLocationId);
         var action = new Option()
         {
             Title = title,
-            Message = message,
             Visible = visible,
             Work = () => story.currentId = toLocationId
         };
@@ -71,13 +69,12 @@ class StoryBuilder
         return this;
     }
 
-    public StoryBuilder AddOption(int forLocationId, string title, string message, DelegateForWork work)
+    public StoryBuilder AddOption(int forLocationId, string title, DelegateForWork work)
     {
         var location = story.Locations.First(l => l.Id == forLocationId);
         var action = new Option()
         {
             Title = title,
-            Message = message,
             Visible = () => true,
             Work = work
         };
@@ -85,13 +82,12 @@ class StoryBuilder
         return this;
     }
 
-    public StoryBuilder AddOption(int forLocationId, string title, string message, DelegateForWork work, DelegateForVisible visible)
+    public StoryBuilder AddOption(int forLocationId, string title, DelegateForWork work, DelegateForVisible visible)
     {
         var location = story.Locations.First(l => l.Id == forLocationId);
         var action = new Option()
         {
             Title = title,
-            Message = message,
             Visible = visible,
             Work = work
         };
