@@ -32,14 +32,14 @@ var story = new StoryBuilder("Вы заперты. Надо что-то дела
 
     .AddOption(LOCATION_DOOR, LOCATION_PICTURE, "перейти к картине")
     .AddOption(LOCATION_DOOR, LOCATION_TABLE,   "перейти к столику")
-    .AddOption(LOCATION_DOOR, "отпереть дверь", DoUnlockDoor, IsDoorLocked)
-    .AddOption(LOCATION_DOOR, "уйти",           DoLeave,      IsDoorUnLocked)
+    .AddOption(LOCATION_DOOR, "отпереть дверь", DoUnlockDoor, () => door_locked)
+    .AddOption(LOCATION_DOOR, "уйти",           DoLeave,      () => !door_locked)
 
     .AddOption(LOCATION_PICTURE, LOCATION_DOOR,  "перейти к двери")
     .AddOption(LOCATION_PICTURE, LOCATION_TABLE, "перейти к столику")
-    .AddOption(LOCATION_PICTURE, "поправить картину", DoRepairPicture, IsRepairPictureVisible)
-    .AddOption(LOCATION_PICTURE, "ввести код",        DoEnterCode,     IsEnterCodeVisible)
-    .AddOption(LOCATION_PICTURE, "взять ключ",        DoGetKey,        IsGetKeyVisible)
+    .AddOption(LOCATION_PICTURE, "поправить картину", DoRepairPicture, () => picture_state == PICTURE_ON_WALL)
+    .AddOption(LOCATION_PICTURE, "ввести код",        DoEnterCode,     () => picture_state == PICTURE_SAFE_LOCKED)
+    .AddOption(LOCATION_PICTURE, "взять ключ",        DoGetKey,        () => picture_state == PICTURE_SAFE_UNLOCKED && !has_key)
 
     .AddOption(LOCATION_TABLE, LOCATION_DOOR,    "перейти к двери")
     .AddOption(LOCATION_TABLE, LOCATION_PICTURE, "перейти к картине")
@@ -109,31 +109,6 @@ string GetPictureDescription()
             desc += "\nСейф абсолютно пуст.";
     }
     return desc;
-}
-
-bool IsDoorLocked()
-{
-    return door_locked;
-}
-
-bool IsDoorUnLocked()
-{
-    return !door_locked;
-}
-
-bool IsRepairPictureVisible()
-{
-    return picture_state == PICTURE_ON_WALL;
-}
-
-bool IsEnterCodeVisible ()
-{
-    return picture_state == PICTURE_SAFE_LOCKED;
-}
-
-bool IsGetKeyVisible ()
-{
-    return picture_state == PICTURE_SAFE_UNLOCKED && has_key == false;
 }
 
 void DoUnlockDoor()
