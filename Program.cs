@@ -24,7 +24,7 @@ bool end = false;
 /////////////
 // ИСТОРИЯ //
 /////////////
-var story = new StoryBuilder("Вы заперты. Надо что-то делать.", "Поздравляем, вы выбрались!")
+var story = new StoryBuilder("Вы заперты. Надо что-то делать.", "Поздравляем, вы выбрались!", LOCATION_DOOR)
 
     .AddLocation(LOCATION_DOOR,    GetDoorDescription)
     .AddLocation(LOCATION_TABLE,   "Вы стоите рядом с низеньким журнальным столиком. На нем лежит потрепанная газета.")
@@ -45,8 +45,6 @@ var story = new StoryBuilder("Вы заперты. Надо что-то дела
     .AddOption(LOCATION_TABLE, LOCATION_PICTURE, "перейти к картине")
     .AddOption(LOCATION_TABLE, "прочитать газету", DoReadNewspaper)
 
-    .SetCurrentlocation(LOCATION_DOOR)
-
     .Build();
 
 ////////////
@@ -63,12 +61,9 @@ while (!end)
     WriteLine();
     WriteLine(loc.Description());
 
-    //выход, если нет вариантов действий
-    if (loc.Options.Count <= 0)
-        break;
-
     //отфильтрованный список пунктов
     var opts = loc.Options.Where(loc => loc.Visible()).ToList();
+    if (opts.Count <= 0) break;
 
     //вывод списка пунктов
     for(int i=0; i<opts.Count; i++)

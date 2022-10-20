@@ -2,17 +2,12 @@ class StoryBuilder
 {
     private Story story;
 
-    public StoryBuilder(string intro = "", string final = "")
+    public StoryBuilder(string intro = "", string final = "", int startid = 0)
     {
         story = new Story();
         story.Inro = intro;
         story.Final = final;
-    }
-
-    public StoryBuilder SetCurrentlocation(int id)
-    {
-        story.currentId = id;
-        return this;
+        story.currentId = startid;
     }
 
     public StoryBuilder AddLocation(int locationId, string description)
