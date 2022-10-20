@@ -1,5 +1,6 @@
 class Story
 {
+    public bool End;
     public int currentId;
     public string Inro;
     public string Final;

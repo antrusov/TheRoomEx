@@ -4,10 +4,13 @@ class StoryBuilder
 
     public StoryBuilder(string intro = "", string final = "", int startid = 0)
     {
-        story = new Story();
-        story.Inro = intro;
-        story.Final = final;
-        story.currentId = startid;
+        story = new Story()
+        {
+            End = false,
+            Inro = intro,
+            Final = final,
+            currentId = startid
+        };
     }
 
     public StoryBuilder AddLocation(int locationId, string description)
